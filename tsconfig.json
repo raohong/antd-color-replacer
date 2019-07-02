@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["dom", "esnext"],
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "sourceMap": false,
+    "outDir": "./lib",
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types"]
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["src/**/*"],
+  "compileOnSave": false
+}
