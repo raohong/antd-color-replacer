@@ -24,8 +24,7 @@
    2.
 
    ```js
-   import { AntdColorReplacerClient } from '../lib';
-   AntdColorReplacerClient.compile(nePrimaryColor);
+   import { AntdColorReplacerClient } from 'AntdColorReplacerClient/lib/client';
    ```
 
 3. 其它
@@ -41,7 +40,7 @@ const webpackConfig = {
   ],
 };
 
-import { AntdColorReplacerClient } from '.lib';
+import { AntdColorReplacerClient } from 'AntdColorReplacerClient/lib/client';
 
 AntdColorReplacerClient.compile(nePrimaryColor);
 ```
@@ -71,6 +70,12 @@ interface AntdColorReplacerOptions {
 }
 
 interface AntdColorReplacerAdapterCustomHandle {
+  /**
+   * 自定义 css node 节点处理器
+   * 参考 postcss api
+   * Tips: 如果要增加新的节点 请添加在当前节点前面
+   */
+
   (node: postcss.Rule, postCss: typeof postcss): void;
 }
 
@@ -91,9 +96,13 @@ interface IMeatFilenameCustomHandle {
   (metaFilename: string): string;
 }
 interface AntdColorReplacerClientOptions {
+  // 保存编译时的数据 json 文件路径
   metaFilename?: string | IMeatFilenameCustomHandle;
+  // 主色
   primaryColor?: string;
+  // 颜色数组
   colors?: string[];
+  // 是否是 antd
   antd?: boolean;
 }
 
