@@ -1,5 +1,6 @@
 // 从 js  文件提取 css
 const getCssCode = (assets: string) => {
+  // 这里采用 " 减少匹配范围
   const matcher = /push\(\[\w+\.\w+,\s*"(?=[\s\S]*?})([\s\S]+?)(?:\\.)?"\s*,\s*['"]['"]\]\)/g;
   const decl = /\w+\s*:\s*[^\s;]+?;/;
 
