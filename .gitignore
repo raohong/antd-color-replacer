@@ -28,3 +28,4 @@ lambda/mock/index.js
 *.sh
 .cache
 
+dist

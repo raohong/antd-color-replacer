@@ -5,8 +5,7 @@ import getCssCode from './utils/getCssCode';
 import * as adapters from './adapter';
 import Extractor from './Extractor';
 import config from './config';
-export { clientCompiler as AntdColorReplacerClient } from './client'
-
+export { clientCompiler as AntdColorReplacerClient } from './client';
 
 export interface AntdColorReplacerOptions {
   antd?: boolean;
@@ -75,12 +74,14 @@ class AntdColorReplacer {
         });
       });
 
-      Promise.all(tasks).then(assets => {
-        this.handleAssets(compilation, assets.join(''));
-        callback();
-      }).catch(err => {
-        console.log(err)
-      });
+      Promise.all(tasks)
+        .then(assets => {
+          this.handleAssets(compilation, assets.join(''));
+          callback();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     });
   }
 
@@ -137,7 +138,7 @@ class AntdColorReplacer {
     const meatFilename = config.metaFilename;
     const content = JSON.stringify(meta);
 
-    compilation.assets[meatFilename] = {
+    compilation.assets[meatFilename.replace(/^\//, '')] = {
       source() {
         return content;
       },
