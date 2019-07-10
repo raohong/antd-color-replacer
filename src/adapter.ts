@@ -63,17 +63,9 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
 
   // https://github.com/ant-design/ant-design-pro/issues/4710
   if (
-    selector ===
-    '.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected'
+    selector === '.ant-menu-horizontal > .ant-menu-item-selected > a' ||
+    selector === '.ant-menu-horizontal > .ant-menu-item > a:hover'
   ) {
-    const darkmenuAdapter: AntdColorReplacerAdapterCustomHandle = (node, _) => {
-      const newNode = node.clone({
-        color: '#fff',
-      });
-
-      node.replaceWith(newNode);
-    };
-
-    return darkmenuAdapter;
+    return false;
   }
 };
