@@ -48,7 +48,10 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
         selector: ':not(.ant-calendar-selected-date).ant-calendar-today .ant-calendar-date:active',
       });
 
-      target.append({ prop: 'color', value: '#ffffff' });
+      target.append({
+        prop: 'color',
+        value: '#ffffff',
+      });
 
       // 一定要先 append  新的 rule 因为后面的会被遍历 属性得到过滤
       node.before(target);
@@ -56,5 +59,21 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
     };
 
     return calendarAdapter;
+  }
+
+  // https://github.com/ant-design/ant-design-pro/issues/4710
+  if (
+    selector ===
+    '.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected'
+  ) {
+    const darkmenuAdapter: AntdColorReplacerAdapterCustomHandle = (node, _) => {
+      const newNode = node.clone({
+        color: '#fff',
+      });
+
+      node.replaceWith(newNode);
+    };
+
+    return darkmenuAdapter;
   }
 };
