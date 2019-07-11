@@ -2,6 +2,8 @@
 
 ## 食用方法
 
+[ant pro demo](https://raohong.github.io/antd-color-replacer-example-antpro/dist/#/formbasicform)
+
 1. `npm i antd-color-replacer`
 
 2) 如果你使用 `ant-pro`
