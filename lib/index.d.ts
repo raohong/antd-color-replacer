@@ -14,6 +14,7 @@ export interface AntdColorReplacerMeta {
     antd: boolean;
     colors: string[];
     primaryColor: string;
+    isDev: boolean;
 }
 declare class AntdColorReplacer {
     private options;

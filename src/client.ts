@@ -29,17 +29,17 @@ interface IGetOptions {
 }
 
 const defaultOptions: AntdColorReplacerClientOptions = {
-  metaFilename: '/js/theme-color-meta.json',
+  metaFilename: config.metaFilename,
   primaryColor: config.primaryColor,
   colors: [],
   antd: true,
 };
 
-const fetch: IFetch = url => {
+const fetch: IFetch = (url, cache: boolean = false) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 304 || (xhr.status >= 200 && xhr.status <= 204)) {
           resolve(xhr.responseText);
@@ -50,13 +50,14 @@ const fetch: IFetch = url => {
     xhr.onabort = reject;
     xhr.onerror = reject;
 
-    xhr.open('GET', url);
+    // 增加 random
+    xhr.open('GET', `${url}${!cache ? `?_ct=${Date.now()}` : ''}`);
 
     xhr.send();
   });
 };
 
-const getOptions: IGetOptions = function(options) {
+const getOptions: IGetOptions = function (options) {
   const ret: IAntdColorReplacerClientOptions = {
     primaryColor: config.primaryColor,
     colors: [],
@@ -99,6 +100,7 @@ const getOptions: IGetOptions = function(options) {
 class AntdColorReplacerClient {
   private id: number;
   private lastCompileOptions?: IAntdColorReplacerClientOptions;
+  private initialCompileOptions?: IAntdColorReplacerClientOptions;
   private meta?: AntdColorReplacerMeta;
 
   constructor() {
@@ -108,7 +110,11 @@ class AntdColorReplacerClient {
 
   compile(options: AntdColorReplacerClientOptions | string = defaultOptions): Promise<void> {
     const compileOptions = getOptions(options);
+
+    const isDev = this.meta ? this.meta.isDev : false;
+
     if (
+      !isDev &&
       this.lastCompileOptions &&
       this.lastCompileOptions.primaryColor === compileOptions.primaryColor
     ) {
@@ -134,6 +140,11 @@ class AntdColorReplacerClient {
                 primaryColor: defaultMeta.primaryColor,
                 colors: defaultMeta.colors,
               } as AntdColorReplacerMeta;
+
+              // 缓存以供开发者模式调用
+              this.initialCompileOptions = { ...this.lastCompileOptions }
+
+
             } catch (_) {
               reject();
             }
@@ -169,9 +180,20 @@ class AntdColorReplacerClient {
   }
 
   private replaceColors(cssText: string, colors: string[]) {
-    const colorRegs = this.lastCompileOptions!.colors.map(
+
+    let targetColors: string[];
+
+    if (this.meta!.isDev) {
+      targetColors = this.initialCompileOptions!.colors
+    } else {
+      targetColors = this.lastCompileOptions!.colors;
+    }
+
+    const colorRegs = targetColors.map(
       color => new RegExp(regExcape(color), 'gi')
     );
+
+    console.log(this.initialCompileOptions)
 
     return colorRegs.reduce((str, reg, index) => {
       const target = colors[index];
@@ -202,6 +224,14 @@ class AntdColorReplacerClient {
   }
 
   private getCssText(): string | null {
+
+    const meta = this.meta;
+
+    // 开发模式下取消缓存
+    if (meta !== undefined && meta.isDev) {
+      return null;
+    }
+
     const el = document.querySelector(`style[id="${this.id}"]`);
     if (!el) {
       return null;

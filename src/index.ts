@@ -21,6 +21,7 @@ export interface AntdColorReplacerMeta {
   antd: boolean;
   colors: string[];
   primaryColor: string;
+  isDev: boolean;
 }
 
 const defaultOptions: AntdColorReplacerOptions = {
@@ -100,7 +101,7 @@ class AntdColorReplacer {
     const options = this.options;
     // 是否 hash 如果没有配置 生产环境采用 其它不采用
     const isHash =
-      compilation.options.mode === 'production' && ('hash' in options ? options.hash : true);
+      compilation.options.mode === 'production' && ('hash' in options ? options.hash : true)
 
     let assetsFilename = options.filename!;
 
@@ -125,11 +126,11 @@ class AntdColorReplacer {
     const options = this.options;
     const webpackOptions = compilation.options;
 
-    const publicPath = webpackOptions.output.publicPath || '/';
+    const publicPath = webpackOptions.output.publicPath || '';
 
     const meta: AntdColorReplacerMeta = {
       filename: publicPath + assetsFilename,
-
+      isDev: compilation.options.mode !== 'production',
       antd: options.antd!,
       colors: options.colors!,
       primaryColor: options.primaryColor!,
