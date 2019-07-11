@@ -39,7 +39,7 @@ const fetch: IFetch = url => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) {
         if (xhr.status === 304 || (xhr.status >= 200 && xhr.status <= 204)) {
           resolve(xhr.responseText);
@@ -56,7 +56,7 @@ const fetch: IFetch = url => {
   });
 };
 
-const getOptions: IGetOptions = function (options) {
+const getOptions: IGetOptions = function(options) {
   const ret: IAntdColorReplacerClientOptions = {
     primaryColor: config.primaryColor,
     colors: [],
@@ -120,7 +120,7 @@ class AntdColorReplacerClient {
 
       // 请求 meta 数据
       if (!this.meta) {
-        const metaFilename = compileOptions.metaFilename!.replace(/^\/*/, '/');
+        const metaFilename = compileOptions.metaFilename!;
         chain = chain
           .then(() => fetch(metaFilename))
 
