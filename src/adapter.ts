@@ -41,11 +41,13 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
   if (selector === '.ant-calendar-today .ant-calendar-date') {
     const calendarAdapter: AntdColorReplacerAdapterCustomHandle = (node, postCss) => {
       const newNode = node.clone({
-        selector: ':not(.ant-calendar-selected-date).ant-calendar-today .ant-calendar-date',
+        selector:
+          ':not(.ant-calendar-selected-date):not(.ant-calendar-selected-day).ant-calendar-today .ant-calendar-date',
       });
 
       const target = postCss.rule({
-        selector: ':not(.ant-calendar-selected-date).ant-calendar-today .ant-calendar-date:active',
+        selector:
+          ':not(.ant-calendar-selected-date):not(.ant-calendar-selected-day).ant-calendar-today .ant-calendar-date:active',
       });
 
       target.append({
