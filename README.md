@@ -44,7 +44,7 @@ const webpackConfig = {
 
 import { AntdColorReplacerClient } from 'AntdColorReplacerClient/lib/client';
 
-AntdColorReplacerClient.compile(nePrimaryColor);
+AntdColorReplacerClient.compile(newPrimaryColor);
 ```
 
 ## 配置项
