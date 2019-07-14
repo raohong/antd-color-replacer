@@ -71,21 +71,16 @@ interface AntdColorReplacerOptions {
   selectorAdapter?: AntdColorReplacerAdapter;
 }
 
-interface AntdColorReplacerAdapterCustomHandle {
-  /**
-   * 自定义 css node 节点处理器
-   * 参考 postcss api
-   * Tips: 如果要增加新的节点 请添加在当前节点前面
-   */
-
-  (node: postcss.Rule, postCss: typeof postcss): void;
-}
+/**
+ * 自定义 css node 节点处理器
+ * 参考 postcss api
+ * Tips: 如果要增加新的节点 请添加在当前节点前面
+ */
+type AntdColorReplacerAdapterCustomHandle = (node: postcss.Rule, postCss: typeof postcss) => void;
 
 type IAdapterResult = string | false | AntdColorReplacerAdapterCustomHandle | void;
 
-interface AntdColorReplacerAdapter {
-  (selector: string): IAdapterResult;
-}
+type AntdColorReplacerAdapter = (selector: string) => IAdapterResult;
 ```
 
 2. AntdColorReplacerClient.compile:
@@ -94,9 +89,8 @@ interface AntdColorReplacerAdapter {
 
 AntdColorReplacerClient.compile:  (options?: string | AntdColorReplacerClientOptions) => Promise<void>;
 
-interface IMeatFilenameCustomHandle {
-  (metaFilename: string): string;
-}
+type IMeatFilenameCustomHandle = (metaFilename: string) => string;
+
 interface AntdColorReplacerClientOptions {
   // 保存编译时的数据 json 文件路径
   metaFilename?: string | IMeatFilenameCustomHandle;
