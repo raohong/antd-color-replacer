@@ -3,27 +3,22 @@ import { regExcape } from './utils';
 import { AntdColorReplacerAdapter } from './adapter';
 import { AntdColorReplacerOptions } from './index';
 
-interface IExtractRule {
+type IExtractRule =
   (
     assets: string,
     selectorAdapter: AntdColorReplacerAdapter,
     checker: (str: string) => boolean
-  ): string;
-}
+  ) => string;
 
-interface IFilterNode {
-  (node: postcss.AtRule): void;
-}
 
-interface IWalker {
-  (node: postcss.ContainerBase): void;
-}
+type IFilterNode = (node: postcss.AtRule) => void
 
-interface IExtractor {
-  (assets: string, options: AntdColorReplacerOptions): Promise<string>;
-}
+type IWalker = (node: postcss.ContainerBase) => void;
 
-const checker = (code: string, colorRegs: RegExp[]): boolean => {
+type IExtractor = (assets: string, options: AntdColorReplacerOptions) => Promise<string>;
+
+
+const check = (code: string, colorRegs: RegExp[]): boolean => {
   return colorRegs.some(reg => reg.test(code));
 };
 
@@ -45,7 +40,7 @@ const nodeAdapter = (node: postcss.Rule, selectorAdapter: AntdColorReplacerAdapt
    * 其它跳过
    */
 
-  let result = selectorAdapter(selector);
+  const result = selectorAdapter(selector);
 
   if (result === false) {
     node.remove();
@@ -81,8 +76,8 @@ const extractRule: IExtractRule = (assets, selectorAdapter, checker) => {
       }
     };
 
-    const walker: IWalker = root => {
-      root.each(node => {
+    const walker: IWalker = parentNode => {
+      parentNode.each(node => {
         // 删除注释
         if (node.type === 'comment') {
           node.remove();
@@ -91,15 +86,15 @@ const extractRule: IExtractRule = (assets, selectorAdapter, checker) => {
 
         // 普通 css 规则 和 除动画申明外 去除不满足条件的生命 当为空时 删除 node
         if (node.type === 'rule' || (node.type === 'atrule' && !/keyframes/.test(node.name))) {
-          node.walk(node => {
-            switch (node.type) {
+          node.walk(subNode => {
+            switch (subNode.type) {
               case 'decl':
-                if (!checker(node.value)) {
-                  node.remove();
+                if (!checker(subNode.value)) {
+                  subNode.remove();
                 }
                 break;
               case 'comment':
-                node.remove();
+                subNode.remove();
                 break;
             }
           });
@@ -169,12 +164,12 @@ export const Extactor: IExtractor = (assets, options) => {
   const colorRegs = colors!.map(color => new RegExp(regExcape(color), 'i'));
 
   const ruleChecker = value => {
-    return checker(value, colorRegs);
+    return check(value, colorRegs);
   };
 
   return new Promise((resolve, reject) => {
     // 预先查找
-    if (!checker(assets, colorRegs)) {
+    if (!check(assets, colorRegs)) {
       resolve('');
     }
 

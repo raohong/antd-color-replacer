@@ -7,6 +7,7 @@ const getCssCode = (assets: string) => {
   const ret: string[] = [];
   let match: RegExpExecArray | null;
 
+  // tslint:disable-next-line: no-conditional-assignment
   while ((match = matcher.exec(assets))) {
     if (decl.test(match[1])) {
       ret.push(match[1].replace(/\\n/g, ''));

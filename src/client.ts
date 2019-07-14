@@ -2,9 +2,8 @@ import { getAntdSerials, regExcape } from './utils';
 import config from './config';
 import { AntdColorReplacerMeta } from './index';
 
-interface IMeatFilenameCustomHandle {
-  (metaFilename: string): string;
-}
+type IMeatFilenameCustomHandle = (metaFilename: string) => string;
+
 
 export interface AntdColorReplacerClientOptions {
   metaFilename?: string | IMeatFilenameCustomHandle;
@@ -13,9 +12,7 @@ export interface AntdColorReplacerClientOptions {
   antd?: boolean;
 }
 
-interface IFetch {
-  (url: string): Promise<string>;
-}
+type IFetch = (url: string) => Promise<string>
 
 interface IAntdColorReplacerClientOptions {
   metaFilename?: string;
@@ -24,9 +21,9 @@ interface IAntdColorReplacerClientOptions {
   antd?: boolean;
 }
 
-interface IGetOptions {
-  (options: string | AntdColorReplacerClientOptions): IAntdColorReplacerClientOptions;
-}
+type IGetOptions =
+  (options: string | AntdColorReplacerClientOptions) => IAntdColorReplacerClientOptions;
+
 
 const defaultOptions: AntdColorReplacerClientOptions = {
   metaFilename: config.metaFilename,
@@ -39,7 +36,7 @@ const fetch: IFetch = (url, cache: boolean = false) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 304 || (xhr.status >= 200 && xhr.status <= 204)) {
           resolve(xhr.responseText);
@@ -57,7 +54,7 @@ const fetch: IFetch = (url, cache: boolean = false) => {
   });
 };
 
-const getOptions: IGetOptions = function (options) {
+const getOptions: IGetOptions = (options) => {
   const ret: IAntdColorReplacerClientOptions = {
     primaryColor: config.primaryColor,
     colors: [],
@@ -151,7 +148,7 @@ class AntdColorReplacerClient {
           });
       }
 
-      let cssText = this.getCssText();
+      const cssText = this.getCssText();
 
       // 如果没有则请求
       if (cssText === null) {

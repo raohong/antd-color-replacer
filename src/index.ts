@@ -56,9 +56,10 @@ class AntdColorReplacer {
       options.filename = defaultOptions.filename;
     }
 
-    this.options = Object.assign({}, options, {
+    this.options = {
+      ...options,
       colors,
-    });
+    };
   }
 
   apply(compiler: webpack.Compiler) {
