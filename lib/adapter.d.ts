@@ -1,11 +1,7 @@
 import * as postcss from 'postcss';
-export interface AntdColorReplacerAdapterCustomHandle {
-    (node: postcss.Rule, postCss: typeof postcss): void;
-}
+export declare type AntdColorReplacerAdapterCustomHandle = (node: postcss.Rule, postCss: typeof postcss) => void;
 declare type IAdapterResult = string | false | AntdColorReplacerAdapterCustomHandle | void;
-export interface AntdColorReplacerAdapter {
-    (selector: string): IAdapterResult;
-}
+export declare type AntdColorReplacerAdapter = (selector: string) => IAdapterResult;
 /**
  *
  * @param {string} selector

@@ -1,6 +1,4 @@
-interface IMeatFilenameCustomHandle {
-    (metaFilename: string): string;
-}
+declare type IMeatFilenameCustomHandle = (metaFilename: string) => string;
 export interface AntdColorReplacerClientOptions {
     metaFilename?: string | IMeatFilenameCustomHandle;
     primaryColor?: string;
