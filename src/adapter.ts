@@ -4,7 +4,7 @@ export type AntdColorReplacerAdapterCustomHandle = (node: postcss.Rule, postCss:
 
 type IAdapterResult = string | false | AntdColorReplacerAdapterCustomHandle | void;
 
-export type AntdColorReplacerAdapter = (selector: string) => IAdapterResult
+export type AntdColorReplacerAdapter = (selector: string) => IAdapterResult;
 
 /**
  *

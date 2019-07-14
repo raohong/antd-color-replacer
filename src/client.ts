@@ -148,14 +148,14 @@ class AntdColorReplacerClient {
           });
       }
 
-      const cssText = this.getCssText();
+      let cssText = this.getCssText();
 
       // 如果没有则请求
       if (cssText === null) {
         chain = chain.then(() => {
-          return fetch(this.meta!.filename).then(cssText => {
-            cssText = this.formatCssText(cssText);
-            return cssText;
+          return fetch(this.meta!.filename).then(css => {
+            cssText = this.formatCssText(css);
+            return css
           });
         });
       } else {
@@ -163,8 +163,8 @@ class AntdColorReplacerClient {
       }
 
       // 得到 css 替换 colors
-      chain = chain.then(cssText => {
-        this.setCssText(this.replaceColors(cssText, compileOptions.colors));
+      chain = chain.then(text => {
+        this.setCssText(this.replaceColors(text, compileOptions.colors));
       });
 
       // 保存上一次的配置
@@ -178,19 +178,13 @@ class AntdColorReplacerClient {
 
   private replaceColors(cssText: string, colors: string[]) {
 
-    let targetColors: string[];
+    const targetColors = this.meta!.isDev ? this.initialCompileOptions!.colors : this.lastCompileOptions!.colors;
 
-    if (this.meta!.isDev) {
-      targetColors = this.initialCompileOptions!.colors
-    } else {
-      targetColors = this.lastCompileOptions!.colors;
-    }
 
     const colorRegs = targetColors.map(
       color => new RegExp(regExcape(color), 'gi')
     );
 
-    console.log(this.initialCompileOptions)
 
     return colorRegs.reduce((str, reg, index) => {
       const target = colors[index];
