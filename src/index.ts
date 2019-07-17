@@ -13,6 +13,11 @@ export interface AntdColorReplacerOptions {
   colors?: string[];
   filename?: string;
   hash?: boolean;
+  // 是否是宽松模式 即: 如果含有 color border outline box-shadow 属性 且含有 #ffffff 类似亮色值 不对该声明进行处理
+  // rgba 会提取 rgb
+  // 此时如果包含上面属性 不会调用 selectAdapter
+  loose?: boolean;
+
   selectorAdapter?: adapters.AntdColorReplacerAdapter;
 }
 
@@ -102,7 +107,7 @@ class AntdColorReplacer {
     const options = this.options;
     // 是否 hash 如果没有配置 生产环境采用 其它不采用
     const isHash =
-      compilation.options.mode === 'production' && ('hash' in options ? options.hash : true)
+      compilation.options.mode === 'production' && ('hash' in options ? options.hash : true);
 
     let assetsFilename = options.filename!;
 

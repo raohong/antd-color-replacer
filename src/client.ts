@@ -4,7 +4,6 @@ import { AntdColorReplacerMeta } from './index';
 
 type IMeatFilenameCustomHandle = (metaFilename: string) => string;
 
-
 export interface AntdColorReplacerClientOptions {
   metaFilename?: string | IMeatFilenameCustomHandle;
   primaryColor?: string;
@@ -12,7 +11,7 @@ export interface AntdColorReplacerClientOptions {
   antd?: boolean;
 }
 
-type IFetch = (url: string) => Promise<string>
+type IFetch = (url: string) => Promise<string>;
 
 interface IAntdColorReplacerClientOptions {
   metaFilename?: string;
@@ -21,9 +20,9 @@ interface IAntdColorReplacerClientOptions {
   antd?: boolean;
 }
 
-type IGetOptions =
-  (options: string | AntdColorReplacerClientOptions) => IAntdColorReplacerClientOptions;
-
+type IGetOptions = (
+  options: string | AntdColorReplacerClientOptions
+) => IAntdColorReplacerClientOptions;
 
 const defaultOptions: AntdColorReplacerClientOptions = {
   metaFilename: config.metaFilename,
@@ -54,7 +53,7 @@ const fetch: IFetch = (url, cache: boolean = false) => {
   });
 };
 
-const getOptions: IGetOptions = (options) => {
+const getOptions: IGetOptions = options => {
   const ret: IAntdColorReplacerClientOptions = {
     primaryColor: config.primaryColor,
     colors: [],
@@ -139,9 +138,7 @@ class AntdColorReplacerClient {
               } as AntdColorReplacerMeta;
 
               // 缓存以供开发者模式调用
-              this.initialCompileOptions = { ...this.lastCompileOptions }
-
-
+              this.initialCompileOptions = { ...this.lastCompileOptions };
             } catch (_) {
               reject();
             }
@@ -155,7 +152,7 @@ class AntdColorReplacerClient {
         chain = chain.then(() => {
           return fetch(this.meta!.filename).then(css => {
             cssText = this.formatCssText(css);
-            return css
+            return css;
           });
         });
       } else {
@@ -177,14 +174,11 @@ class AntdColorReplacerClient {
   }
 
   private replaceColors(cssText: string, colors: string[]) {
+    const targetColors = this.meta!.isDev
+      ? this.initialCompileOptions!.colors
+      : this.lastCompileOptions!.colors;
 
-    const targetColors = this.meta!.isDev ? this.initialCompileOptions!.colors : this.lastCompileOptions!.colors;
-
-
-    const colorRegs = targetColors.map(
-      color => new RegExp(regExcape(color), 'gi')
-    );
-
+    const colorRegs = targetColors.map(color => new RegExp(regExcape(color), 'gi'));
 
     return colorRegs.reduce((str, reg, index) => {
       const target = colors[index];
@@ -215,7 +209,6 @@ class AntdColorReplacerClient {
   }
 
   private getCssText(): string | null {
-
     const meta = this.meta;
 
     // 开发模式下取消缓存

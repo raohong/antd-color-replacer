@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { AntdColorReplacerClient } from '../lib';
 import styles from './styles/index.less';
+import { AntdColorReplacerClient } from '../lib';
 
 const primaryColor = '#0081ff';
 const colorList = ['#0081ff', '#1890ff', '#F5222D', '#52C41A'];
-const getColors = primaryColor => {
-  return [primaryColor];
+
+const getColors = (color: string) => {
+  return [color];
 };
 
 const ColorTag = ({ color, onClick, checked }) => (
@@ -31,6 +32,7 @@ const ColorList = props => {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {colorList.map(color => (
+        // @ts-ignore
         <ColorTag
           checked={color === props.color}
           onClick={() => onClick(color)}
@@ -73,6 +75,4 @@ const App = () => {
   );
 };
 
-const setup = App => ReactDOM.render(<App />, document.querySelector('#root'));
-
-setup(App);
+ReactDOM.render(<App />, document.querySelector('#root'));

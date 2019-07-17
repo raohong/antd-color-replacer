@@ -1,5 +1,5 @@
 {
-  "presets": ["@babel/preset-typescript", "@babel/preset-react", "@babel/preset-env"],
+  "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"],
   "plugins": [
     "@babel/plugin-transform-arrow-functions",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
@@ -7,5 +7,24 @@
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-syntax-dynamic-import",
     ["import", { "libraryName": "antd", "style": true }]
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": { "node": "current" }
+          }
+        ],
+        "@babel/preset-typescript"
+      ],
+      "plugins": [
+        "@babel/plugin-transform-arrow-functions",
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-proposal-class-properties", { "loose": true }],
+        "@babel/plugin-proposal-object-rest-spread"
+      ]
+    }
+  }
 }

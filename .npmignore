@@ -1,9 +1,13 @@
-test
+tests
+dev
 tslint.json
 tsconfig.json
+global.d.ts
 .babelrc
 .prettierrc
 .prettierignore
+.eslintrc
+.eslintignore
 dist
 postcss.config.js
-global.d.ts
+

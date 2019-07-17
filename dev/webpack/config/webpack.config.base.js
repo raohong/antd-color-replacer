@@ -3,21 +3,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const AntdColorReplacer = require('../../../lib').default;
-const { tint } = require('../../../lib/utils');
 
 const root = process.cwd();
 const env = process.env.NODE_ENV;
-const entryDirName = 'test';
+const entryDirName = 'dev';
 
 const primaryColor = '#0081ff';
-const getColors = primaryColor => {
-  return [primaryColor];
+const getColors = color => {
+  return [color];
 };
 
 const config = {
   context: root,
   mode: env,
-  entry: path.join(root, entryDirName, 'entry.js'),
+  entry: path.join(root, entryDirName, 'entry.tsx'),
   output: {
     path: path.join(root, 'dist'),
     publicPath: '/',
