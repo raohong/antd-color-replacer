@@ -15,9 +15,6 @@
     "lint-staged": "lint-staged"
   },
   "jest": {
-    "setupFilesAfterEnv": [
-      "./node_modules/jest-enzyme/lib/index.js"
-    ],
     "setupFiles": [
       "./tests/setup.js"
     ]
@@ -30,11 +27,11 @@
   "lint-staged": {
     "**/*.{ts,tsx}": "npm run tslint",
     "**/*.{js,jsx}": "npm run eslint",
-    "**/*.{ts,tsx,js,jsx}": [
+    "**/*.{ts,tsx,js,jsx,d.ts}": [
       "npm run prettier",
       "git add"
     ],
-    "*.{json,md,yml}": [
+    "*.{json,md,yml,less}": [
       "prettier --write",
       "git add"
     ]
@@ -98,6 +95,7 @@
   "dependencies": {
     "@ant-design/colors": "^3.1.0",
     "color": "^3.1.2",
+    "get-relative-luminance": "^0.3.1",
     "postcss": "^7.0.17"
   },
   "browserslist": [

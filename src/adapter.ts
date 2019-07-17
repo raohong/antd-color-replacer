@@ -1,6 +1,9 @@
 import * as postcss from 'postcss';
 
-export type AntdColorReplacerAdapterCustomHandle = (node: postcss.Rule, postCss: typeof postcss) => void;
+export type AntdColorReplacerAdapterCustomHandle = (
+  node: postcss.Rule,
+  postCss: typeof postcss
+) => void;
 
 type IAdapterResult = string | false | AntdColorReplacerAdapterCustomHandle | void;
 
@@ -29,7 +32,7 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
   if (
     selector === '.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon' ||
     selector ===
-    '.ant-steps-item-custom.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon'
+      '.ant-steps-item-custom.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon'
   ) {
     return false;
   }

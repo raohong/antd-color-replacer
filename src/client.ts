@@ -1,6 +1,6 @@
 import { getAntdSerials, regExcape } from './utils';
 import config from './config';
-import { AntdColorReplacerMeta } from './index';
+import { AntdColorReplacerMeta } from './plugin';
 
 type IMeatFilenameCustomHandle = (metaFilename: string) => string;
 
@@ -19,10 +19,6 @@ interface IAntdColorReplacerClientOptions {
   colors: string[];
   antd?: boolean;
 }
-
-type IGetOptions = (
-  options: string | AntdColorReplacerClientOptions
-) => IAntdColorReplacerClientOptions;
 
 const defaultOptions: AntdColorReplacerClientOptions = {
   metaFilename: config.metaFilename,
@@ -53,7 +49,9 @@ const fetch: IFetch = (url, cache: boolean = false) => {
   });
 };
 
-const getOptions: IGetOptions = options => {
+const getOptions: (
+  options: string | AntdColorReplacerClientOptions
+) => IAntdColorReplacerClientOptions = options => {
   const ret: IAntdColorReplacerClientOptions = {
     primaryColor: config.primaryColor,
     colors: [],

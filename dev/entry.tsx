@@ -11,7 +11,7 @@ const getColors = (color: string) => {
   return [color];
 };
 
-const ColorTag = ({ color, onClick, checked }) => (
+const ColorTag = ({ color, onClick, _ }) => (
   <div
     onClick={onClick}
     className={styles.tag}
