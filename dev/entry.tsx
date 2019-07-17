@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import styles from './styles/index.less';
-import { AntdColorReplacerClient } from '../lib';
+import AntdColorReplacerClient from '../lib/client';
 
 const primaryColor = '#0081ff';
 const colorList = ['#0081ff', '#1890ff', '#F5222D', '#52C41A'];
@@ -71,6 +71,8 @@ const App = () => {
         for building, testing, and delivering unique features. Though still an early preview, this
         is our first end-user product built completely with these new
       </p>
+
+      <button className={styles.dark}>Toggle Btn</button>
     </div>
   );
 };

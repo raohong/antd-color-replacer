@@ -42,3 +42,82 @@ export const checkColorLuminance = (cssValue: string, range: [number, number]): 
     return false;
   }
 };
+
+export const loosePropCheck = (prop: string, list: string[]): boolean => {
+  const btParser = /border|outline/;
+
+  const bgParser = /background/;
+
+  // border outline
+  if (btParser.test(prop)) {
+    const configProp = list.find(item => btParser.test(item));
+
+    if (!configProp) {
+      return false;
+    }
+
+    const match1 = configProp.match(/^[a-z\d]+-([a-z\d]+)(?:-([a-z\d]+))?$/i) as RegExpMatchArray;
+    // eg border outline
+    if (match1 === null) {
+      return true;
+    }
+
+    const match2 = prop.match(/^[a-z\d]+-+([a-z\d]+)(?:-([a-z\d]+))?$/i);
+
+    // eg configProp: border-top prop: border
+    if (match2 === null) {
+      return false;
+    }
+
+    // eg prop: border-top-color
+    if (match2[2]) {
+      if (match2[2] !== 'color') {
+        return false;
+      }
+      // eg configProp: border-top
+      if (!match1[2] && match1[1] === match2[1]) {
+        return true;
+      }
+
+      // eg configProp: border-top-color prop:border-top-color
+      // eg configProp: border-bottom-color prop:border-top-color
+      if (match1[2] && match1[2] === 'color' && match1[1] === match2[1]) {
+        return true;
+      }
+    } else {
+      // eg prop: border-top configPorp: border-bottom
+      if (match2[1] && !match1[2] && match2[1] === match1[1]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // background
+  if (bgParser.test(prop)) {
+    const target = list.find(item => bgParser.test(item));
+
+    if (!target) {
+      return false;
+    }
+
+    // 由前面的条件可知 必存在
+    const bgMatch1 = prop.match(/^background(?:-([a-z\d]+))?$/i) as RegExpMatchArray;
+    const bgMatch2 = target.match(/^background(?:-([a-z\d]+))?$/i) as RegExpMatchArray;
+
+    if (bgMatch1[1]) {
+      // eg background-color background
+      if (!bgMatch2[1]) {
+        return true;
+      }
+
+      return bgMatch2[1] === bgMatch1[1];
+    }
+
+    // eg background background-image
+    return bgMatch2[1] ? false : prop === target;
+  }
+
+  return list.includes(prop);
+};

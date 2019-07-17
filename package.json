@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
-    "ts:watch": "tsc -w -d",
+    "dev": "tsc -w -d",
     "build": "tsc -d",
     "prettier": "prettier --config .prettierrc --write \"./{src,tests}/**/*.{less,ts,tsx,js}\" \"!./{build.dist}/**\"",
     "webpack-dev": "cross-env NODE_ENV=development webpack-dev-server --inline  --config ./dev/webpack/config/webpack.config.dev.js",

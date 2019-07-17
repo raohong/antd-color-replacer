@@ -14,6 +14,7 @@ export default {
   primaryColor: '#1890ff',
   cssFilename: 'css/theme-color.css',
   metaFilename: '/js/theme-color-meta.json',
-  looseProps: ['border', 'color', 'box-shadow', 'outline'],
-  luminance: [0.99, 1],
+  looseProps: ['border', 'color', 'background'],
+  // #fff
+  luminance: [1, 1],
 } as AntdColorReplacerConfig;

@@ -1,4 +1,9 @@
-import { regExcape, checkColorLuminance, extractColorFromValue } from '../src/utils';
+import {
+  regExcape,
+  checkColorLuminance,
+  extractColorFromValue,
+  loosePropCheck,
+} from '../src/utils';
 
 describe('Utils test', () => {
   it('get escaped str', () => {
@@ -48,5 +53,49 @@ describe('Utils test', () => {
   it('the color should be passed', () => {
     const cssValue = `border-top: 1px solid #fff`;
     expect(checkColorLuminance(cssValue, [1, 1])).toEqual(true);
+  });
+
+  it('prop "border" should passed width ["border"]', () => {
+    expect(loosePropCheck('border', ['border'])).toEqual(true);
+  });
+
+  it('prop "border-top" should passed width ["border"]', () => {
+    expect(loosePropCheck('border-top', ['border'])).toEqual(true);
+  });
+
+  it('prop "border-top" should  passed width ["border-top"]', () => {
+    expect(loosePropCheck('border-top', ['border-top'])).toEqual(true);
+  });
+
+  it('prop "border-top" should not  passed width ["border-top-color"]', () => {
+    expect(loosePropCheck('border-top', ['border-top-color'])).toEqual(false);
+  });
+
+  it('prop "border-top" should  passed width ["border-bottom"]', () => {
+    expect(loosePropCheck('border-top', ['border-bottom'])).toEqual(false);
+  });
+
+  it('prop "border-top-color" should not passed with ["border-top-width"]', () => {
+    expect(loosePropCheck('border-top-color', ['border-top-width'])).toEqual(false);
+  });
+
+  it('prop "border-top-color" should not passed with ["border-bottom-color"]', () => {
+    expect(loosePropCheck('border-top-color', ['border-bottom-color'])).toEqual(false);
+  });
+
+  it('prop "background" should  passed with ["background"]', () => {
+    expect(loosePropCheck('background', ['background'])).toEqual(true);
+  });
+
+  it('prop "background" should not  passed with ["background-color"]', () => {
+    expect(loosePropCheck('background', ['background-color'])).toEqual(false);
+  });
+
+  it('prop "background-image" should not  passed with ["background-color"]', () => {
+    expect(loosePropCheck('background-image', ['background-color'])).toEqual(false);
+  });
+
+  it('prop "background-image" should not  passed with ["background"]', () => {
+    expect(loosePropCheck('background-image', ['background'])).toEqual(true);
   });
 });
