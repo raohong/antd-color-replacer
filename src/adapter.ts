@@ -64,7 +64,7 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
       });
 
       // 弱国要额外添加 rule node , 一定要先 append  新的 rule 因为后面的会被遍历 属性得到过滤
-      node.replaceWith(newNode);
+      node.before(newNode);
     };
 
     return calendarAdapter;
