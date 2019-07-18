@@ -18,9 +18,6 @@ module.exports = merge(config, {
           'style-loader',
           {
             loader: 'css-loader',
-            options: {
-              modules: true,
-            },
           },
         ],
       },
@@ -30,9 +27,6 @@ module.exports = merge(config, {
           'style-loader',
           {
             loader: 'css-loader',
-            options: {
-              modules: true,
-            },
           },
           'postcss-loader',
           {

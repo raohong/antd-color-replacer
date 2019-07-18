@@ -34,7 +34,7 @@ const defaultOptions: AntdColorReplacerOptions = {
   antd: true,
   primaryColor: config.primaryColor,
   colors: [],
-  loose: false,
+  loose: true,
   looseProps: config.looseProps,
   luminance: config.luminance,
   // selectorAdapter: adapters.antdSelectorAdapter,
@@ -44,7 +44,10 @@ const defaultOptions: AntdColorReplacerOptions = {
  * 获取配置信息
  * @param options
  */
-export const getOptions = (options: AntdColorReplacerOptions): AntdColorReplacerOptions => {
+export const getOptions = (
+  options: AntdColorReplacerOptions,
+  defaults: AntdColorReplacerOptions = defaultOptions
+): AntdColorReplacerOptions => {
   if (options !== undefined && typeof options !== 'object') {
     throw new TypeError('AntdColorReplacer required a object options');
   }
@@ -62,7 +65,8 @@ export const getOptions = (options: AntdColorReplacerOptions): AntdColorReplacer
   }
 
   if ('loose' in options) {
-    options.loose = !!options.loose;
+    // options.loose = !!options.loose;
+    options.loose = true;
 
     if (!('looseProps' in options)) {
       options.looseProps = defaultOptions.looseProps;
@@ -78,6 +82,7 @@ export const getOptions = (options: AntdColorReplacerOptions): AntdColorReplacer
   }
 
   return {
+    ...defaults,
     ...options,
     colors,
   };
@@ -86,7 +91,7 @@ export const getOptions = (options: AntdColorReplacerOptions): AntdColorReplacer
 class AntdColorReplacer {
   private options: AntdColorReplacerOptions;
 
-  constructor(options = defaultOptions) {
+  constructor(options: AntdColorReplacerOptions = defaultOptions) {
     this.options = getOptions(options);
   }
 

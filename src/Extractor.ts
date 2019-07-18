@@ -1,5 +1,5 @@
 import * as postcss from 'postcss';
-import { regExcape, checkColorLuminance } from './utils';
+import { regExcape, checkColorLuminance, loosePropCheck } from './utils';
 
 import { AntdColorReplacerAdapter } from './adapter';
 import { AntdColorReplacerOptions } from './plugin';
@@ -90,33 +90,14 @@ const handleRule = (
 
   const { luminance, looseProps } = options;
 
-  const loosePropsChecker = prop => looseProps!.includes(prop);
-
-  let matched: boolean = false;
-
-  node.walk(subNode => {
-    switch (subNode.type) {
-      case 'decl':
-        if (!matched && ruleChecker(subNode.value)) {
-          matched = true;
-        }
-        break;
-      case 'comment':
-        subNode.remove();
-        break;
-    }
+  node.walkComments(subNode => {
+    subNode.remove();
   });
 
   node.walkDecls(subNode => {
-    if (!matched) {
-      subNode.remove();
-      return;
-    }
-
     const { prop, value } = subNode;
-
     if (!ruleChecker(value)) {
-      if (!loosePropsChecker(prop) || !checkColorLuminance(value, luminance!)) {
+      if (!loosePropCheck(prop, looseProps!) || !checkColorLuminance(value, luminance!)) {
         subNode.remove();
       }
     }

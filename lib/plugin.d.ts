@@ -22,7 +22,10 @@ export interface AntdColorReplacerMeta {
  * 获取配置信息
  * @param options
  */
-export declare const getOptions: (options: AntdColorReplacerOptions) => AntdColorReplacerOptions;
+export declare const getOptions: (
+  options: AntdColorReplacerOptions,
+  defaults?: AntdColorReplacerOptions
+) => AntdColorReplacerOptions;
 declare class AntdColorReplacer {
   private options;
   constructor(options?: AntdColorReplacerOptions);

@@ -3,10 +3,12 @@
   padding: 0;
 }
 
+@theme: #1890ff;
+
 body {
-  background: linear-gradient(45deg, #0081ff, #1cbbb4) no-repeat;
-  border-top: 2px solid #0081ff;
-  transition: all 0.2s ease-in;
+  background: linear-gradient(45deg, @theme, #1cbbb4) no-repeat;
+  border-top: 2px solid @theme;
+  transition: background-color 0.2s ease-in;
 }
 
 .root {
@@ -19,14 +21,14 @@ body {
 }
 
 .dark {
-  background-color: #0081ff;
+  background-color: @theme;
   color: #fff;
   display: inline-block;
   border: 0;
   outline: 0;
   padding: 4px 12px;
   &:hover {
-    color: #0081ff;
+    color: @theme;
     background-color: #fff;
   }
 }

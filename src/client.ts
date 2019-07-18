@@ -133,6 +133,7 @@ class AntdColorReplacerClient {
               this.lastCompileOptions = {
                 primaryColor: defaultMeta.primaryColor,
                 colors: defaultMeta.colors,
+                antd: defaultMeta.antd,
               } as AntdColorReplacerMeta;
 
               // 缓存以供开发者模式调用

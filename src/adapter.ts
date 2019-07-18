@@ -20,53 +20,58 @@ export type AntdColorReplacerAdapter = (selector: string) => IAdapterResult;
  */
 
 export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
-  if (
-    selector === '.ant-btn:hover, .ant-btn:focus' ||
-    selector === '.ant-btn:active, .ant-btn.active' ||
-    selector === '.ant-btn:focus, .ant-btn:hover' ||
-    selector === '.ant-btn.active, .ant-btn:active'
-  ) {
-    return selector.replace(/\.ant-btn/g, '$&:not(.ant-btn-primary)');
+  // 日期选择 disabled .ant-calendar-date:active 样式
+  if (selector === '.ant-calendar-date:active') {
+    return ':not(.ant-calendar-disabled-cell).ant-calendar-cell .ant-calendar-date:active';
   }
 
+  //  日期选择 disabled .ant-calendar-today background-color 样式
+  if (selector === '.ant-calendar-selected-day .ant-calendar-date') {
+    return ':not(.ant-calendar-disabled-cell).ant-calendar-selected-day .ant-calendar-date';
+  }
+
+  // Date RangePicker
   if (
-    selector === '.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon' ||
     selector ===
-      '.ant-steps-item-custom.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon'
+    '.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date'
   ) {
-    return false;
+    return selector
+      .split(',')
+      .map(item => `:not(.ant-calendar-disabled-cell)${item}`)
+      .join(',');
+  }
+
+  // Date RangePicker :hover
+  if (
+    selector ===
+    '.ant-calendar-selected-date .ant-calendar-date:hover, .ant-calendar-selected-start-date .ant-calendar-date:hover, .ant-calendar-selected-end-date .ant-calendar-date:hover'
+  ) {
+    return selector
+      .split(',')
+      .map(item => `:not(.ant-calendar-disabled-cell)${item}`)
+      .join(',');
   }
 
   if (selector === '.ant-calendar-today .ant-calendar-date') {
     const calendarAdapter: AntdColorReplacerAdapterCustomHandle = (node, postCss) => {
-      const newNode = node.clone({
+      const newNode = postCss.rule({
         selector:
-          ':not(.ant-calendar-selected-date):not(.ant-calendar-selected-day).ant-calendar-today .ant-calendar-date',
+          ':not(.ant-calendar-week):not(.ant-calendar-range).ant-calendar .ant-calendar-today:not(.ant-calendar-disabled-cell) .ant-calendar-date:active',
       });
-
-      const target = postCss.rule({
-        selector:
-          ':not(.ant-calendar-selected-date):not(.ant-calendar-selected-day).ant-calendar-today .ant-calendar-date:active',
-      });
-
-      target.append({
+      newNode.append({
         prop: 'color',
         value: '#ffffff',
       });
 
-      // 一定要先 append  新的 rule 因为后面的会被遍历 属性得到过滤
-      node.before(target);
+      // 弱国要额外添加 rule node , 一定要先 append  新的 rule 因为后面的会被遍历 属性得到过滤
       node.replaceWith(newNode);
     };
 
     return calendarAdapter;
   }
 
-  // https://github.com/ant-design/ant-design-pro/issues/4710
-  if (
-    selector === '.ant-menu-horizontal > .ant-menu-item-selected > a' ||
-    selector === '.ant-menu-horizontal > .ant-menu-item > a:hover'
-  ) {
-    return false;
+  // dark Menu
+  if (selector === '.ant-menu') {
+    return ':not(.ant-menu-dark).ant-menu';
   }
 };

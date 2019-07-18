@@ -16,9 +16,6 @@ module.exports = merge(config, {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: {
-              modules: true,
-            },
           },
           'css-loader',
         ],
@@ -29,9 +26,6 @@ module.exports = merge(config, {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: {
-              modules: true,
-            },
           },
           'postcss-loader',
           {

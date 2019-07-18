@@ -8,7 +8,7 @@ const root = process.cwd();
 const env = process.env.NODE_ENV;
 const entryDirName = 'dev';
 
-const primaryColor = '#0081ff';
+const primaryColor = '#1890ff';
 const getColors = color => {
   return [color];
 };
@@ -16,7 +16,7 @@ const getColors = color => {
 const config = {
   context: root,
   mode: env,
-  entry: path.join(root, entryDirName, 'entry.tsx'),
+  entry: path.join(root, entryDirName, 'entry.js'),
   output: {
     path: path.join(root, 'dist'),
     publicPath: '/',
@@ -65,8 +65,6 @@ const config = {
 
     new AntdColorReplacer({
       primaryColor,
-      antd: false,
-      colors: getColors(primaryColor),
     }),
   ],
 };
