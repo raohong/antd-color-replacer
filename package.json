@@ -25,7 +25,7 @@
     }
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": "npm run tslint",
+    "src/*.{ts,tsx}": "npm run tslint",
     "**/*.{js,jsx}": "npm run eslint",
     "**/*.{ts,tsx,js,jsx,d.ts}": [
       "npm run prettier",
