@@ -64,9 +64,9 @@ export const getOptions = (
     }
   }
 
+  options.loose = true;
   if ('loose' in options) {
     // options.loose = !!options.loose;
-    options.loose = true;
 
     if (!('looseProps' in options)) {
       options.looseProps = defaultOptions.looseProps;
