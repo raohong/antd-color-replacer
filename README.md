@@ -1,5 +1,7 @@
 # 一个 webpack 主题切换器
 
+[![Build Status](https://travis-ci.org/raohong/antd-color-replacer.svg?branch=master)](https://travis-ci.org/raohong/antd-color-replacer)
+
 ## 食用方法
 
 [ant pro demo](https://raohong.github.io/antd-color-replacer-example-antpro/dist/#/formbasicform)
@@ -26,7 +28,7 @@
    2.
 
    ```js
-   import { AntdColorReplacerClient } from 'AntdColorReplacerClient/lib/client';
+   import AntdColorReplacerClient from 'AntdColorReplacerClient/lib/client';
    ```
 
 3. 其它
@@ -42,7 +44,7 @@ const webpackConfig = {
   ],
 };
 
-import { AntdColorReplacerClient } from 'AntdColorReplacerClient/lib/client';
+import AntdColorReplacerClient from 'AntdColorReplacerClient/lib/client';
 
 AntdColorReplacerClient.compile(newPrimaryColor);
 ```
@@ -67,6 +69,12 @@ interface AntdColorReplacerOptions {
   filename?: string;
   // production 环境时 filename  是否生成 hash 默认是 即 css/theme-color.[hash].css
   hash?: boolean;
+  // 是否开启宽松模式 即 不在符合主题颜色的情况下 颜色亮度值 在 luminance 设定的范围内 即可保留
+  readonly loose: boolean;
+  // 目标 css prop  default ['border', 'color', 'background', 'outline', 'box-shadow']
+  looseProps: string[];
+  // 参照 https://github.com/misund/get-relative-luminance
+  luminance: [number, number];
   // css 选择适配器 参照 antd-color-replacer/src/adapter.antdSelectorAdapter]
   selectorAdapter?: AntdColorReplacerAdapter;
 }
