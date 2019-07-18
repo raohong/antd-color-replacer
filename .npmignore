@@ -8,6 +8,7 @@ global.d.ts
 .prettierignore
 .eslintrc
 .eslintignore
+.travis.yml
 dist
 postcss.config.js
 
