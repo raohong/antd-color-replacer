@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Steps, Menu, Icon } from 'antd';
+import { Button, Steps, Menu, Icon, DatePicker } from 'antd';
 
 import './styles/index.less';
 import AntdColorReplacerClient from '../lib/client';
@@ -103,6 +103,7 @@ const App = () => {
             <Menu.Item key='4'>Option 4</Menu.Item>
           </SubMenu>
         </Menu>
+        <DatePicker.RangePicker />
         <Steps direction='vertical' current={1}>
           <Step title='Finished' description='This is a description.' />
           <Step title='In Progress' description='This is a description.' />
