@@ -6,7 +6,7 @@ export { tint } from './tint';
  * 正则转义
  * @param str
  */
-export const regExcape = (str: string): string => {
+export const regEscape = (str: string): string => {
   return str.replace(/[*+?{}[\]()\\\/.^$-]/g, '\\$&');
 };
 
@@ -43,9 +43,29 @@ export const checkColorLuminance = (cssValue: string, range: [number, number]): 
   }
 };
 
-export const loosePropCheck = (prop: string, list: string[]): boolean => {
-  const btParser = /border|outline/;
+/**
+ * css  prefix 过滤
+ * @param prop
+ */
+export const removeCssPrefix = (prop: string): string => {
+  const filter = /^(?:-webkit-|-ms-|-moz-|-o-)/i;
+  return prop.replace(filter, '');
+};
 
+/**
+ * loose 模式下 属性检查
+ * @param cssProp
+ * @param list
+ */
+export const loosePropCheck = (cssProp: string, list: string[]): boolean => {
+  // 可能为空
+  if (!cssProp) {
+    return false;
+  }
+
+  const prop = removeCssPrefix(cssProp);
+
+  const btParser = /border|outline/;
   const bgParser = /background/;
 
   // border outline

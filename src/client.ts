@@ -1,4 +1,4 @@
-import { getAntdSerials, regExcape } from './utils';
+import { getAntdSerials, regEscape } from './utils';
 import config from './config';
 import { AntdColorReplacerMeta } from './plugin';
 
@@ -177,7 +177,7 @@ class AntdColorReplacerClient {
       ? this.initialCompileOptions!.colors
       : this.lastCompileOptions!.colors;
 
-    const colorRegs = targetColors.map(color => new RegExp(regExcape(color), 'gi'));
+    const colorRegs = targetColors.map(color => new RegExp(regEscape(color), 'gi'));
 
     return colorRegs.reduce((str, reg, index) => {
       const target = colors[index];

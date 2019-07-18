@@ -1,5 +1,5 @@
 import * as postcss from 'postcss';
-import { regExcape, checkColorLuminance, loosePropCheck } from './utils';
+import { regEscape, checkColorLuminance, loosePropCheck } from './utils';
 
 import { AntdColorReplacerAdapter } from './adapter';
 import { AntdColorReplacerOptions } from './plugin';
@@ -121,7 +121,7 @@ export default class Extactor {
       colors.unshift(...colors.splice(colors.indexOf(primaryColor!), 1));
     }
 
-    const colorRegs = colors!.map(color => new RegExp(regExcape(color), 'i'));
+    const colorRegs = colors!.map(color => new RegExp(regEscape(color), 'i'));
 
     this.colorRegs = colorRegs;
 

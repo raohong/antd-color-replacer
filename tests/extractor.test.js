@@ -46,7 +46,7 @@ describe('Extractor test not in loose mode', () => {
       return false;
     });
 
-    const notContainRule = root.some(node => {
+    const containRule = root.some(node => {
       if (node.type === 'rule') {
         return node.selector === '.test';
       }
@@ -55,7 +55,9 @@ describe('Extractor test not in loose mode', () => {
 
     expect(hasExpectedDecl).toEqual(true);
     expect(hasExpectedRule).toEqual(true);
-    expect(notContainRule).toEqual(false);
+
+    // #fff passed
+    expect(containRule).toEqual(true);
   });
 });
 

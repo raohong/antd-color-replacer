@@ -1,25 +1,28 @@
 import {
-  regExcape,
+  regEscape,
   checkColorLuminance,
   extractColorFromValue,
   loosePropCheck,
+  removeCssPrefix,
 } from '../src/utils';
 
-describe('Utils test', () => {
+describe('regEscape test', () => {
   it('get escaped str', () => {
     const list = ['.', '?', '*', '{', '}', '(', ')', '[', ']', '+', '^', '$', '\\', '/', '-'];
 
     const special = ['s.', 's?'];
 
     list.forEach(str => {
-      expect(regExcape(str)).toEqual(`\\${str}`);
+      expect(regEscape(str)).toEqual(`\\${str}`);
     });
 
     special.forEach(str => {
-      expect(regExcape(str)).toEqual(`${str.slice(0, 1)}\\${str.slice(1)}`);
+      expect(regEscape(str)).toEqual(`${str.slice(0, 1)}\\${str.slice(1)}`);
     });
   });
+});
 
+describe('loosePropCheck test', () => {
   it('extract short hex from cssValue', () => {
     const cssValue = `border-top: 1px solid #fff`;
     expect(extractColorFromValue(cssValue)).toEqual('#fff');
@@ -97,5 +100,18 @@ describe('Utils test', () => {
 
   it('prop "background-image" should not  passed with ["background"]', () => {
     expect(loosePropCheck('background-image', ['background'])).toEqual(true);
+  });
+});
+
+describe('removeCssPrefix test', () => {
+  const prefixs = ['-webkit-', '-moz-', '-ms-', '-o-'];
+  it('remove normal prefix', () => {
+    const props = ['background-clip', 'box-shadow', 'background-image'];
+
+    props.forEach(prop => {
+      prefixs.forEach(prefix => {
+        expect(removeCssPrefix(`${prefix}${prop}`)).toEqual(prop);
+      });
+    });
   });
 });
