@@ -33,7 +33,9 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
   // Date RangePicker
   if (
     selector ===
-    '.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date'
+      '.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date' ||
+    selector ===
+      '.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date'
   ) {
     return selector
       .split(',')
