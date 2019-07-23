@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Steps, Menu, Icon, DatePicker } from 'antd';
+import { Button, Steps, Menu, Icon, DatePicker, Checkbox } from 'antd';
 
 import './styles/index.less';
 import AntdColorReplacerClient from '../lib/client';
 
 const { Step } = Steps;
 const { SubMenu } = Menu;
+const { Group } = Checkbox;
 
 const primaryColor = '#1890ff';
 const colorList = ['#1890ff', '#F5222D', '#52C41A'];
@@ -109,7 +110,11 @@ const App = () => {
           <Step title='In Progress' description='This is a description.' />
           <Step title='Waiting' description='This is a description.' />
         </Steps>
-        ,
+        <Group>
+          <Checkbox value={1}>1</Checkbox>
+          <Checkbox value={2}>2</Checkbox>
+          <Checkbox value={3}>3</Checkbox>
+        </Group>
         <button type='button' className='dark'>
           Toggle Btn
         </button>
