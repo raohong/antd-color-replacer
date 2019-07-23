@@ -28,11 +28,15 @@ export const extractColorFromValue = (cssValue: string): null | string => {
  * @param range
  */
 export const checkColorLuminance = (cssValue: string, range: [number, number]): boolean => {
-  try {
-    const color = extractColorFromValue(cssValue);
+  const value = cssValue.replace(/\s*!important/, '');
 
+  const color = extractColorFromValue(value);
+
+  const noneList = ['0', 'none', 'unset'];
+
+  try {
     if (color === null) {
-      return false;
+      return noneList.includes(value);
     }
 
     const luminance = getRelativeLuminance(color);
@@ -70,7 +74,10 @@ export const loosePropCheck = (cssProp: string, list: string[]): boolean => {
 
   // border outline
   if (btParser.test(prop)) {
-    const configProp = list.find(item => btParser.test(item));
+    const configProp = list.find(item => {
+      const propChecker = new RegExp(regEscape(item), 'i');
+      return propChecker.test(prop);
+    });
 
     if (!configProp) {
       return false;

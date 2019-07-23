@@ -101,6 +101,10 @@ describe('loosePropCheck test', () => {
   it('prop "background-image" should not  passed with ["background"]', () => {
     expect(loosePropCheck('background-image', ['background'])).toEqual(true);
   });
+
+  it('prop "outline" should not  passed with ["border"]', () => {
+    expect(loosePropCheck('outline', ['border'])).toEqual(false);
+  });
 });
 
 describe('removeCssPrefix test', () => {
