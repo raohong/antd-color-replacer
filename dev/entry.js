@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Steps, Menu, Icon, DatePicker, Checkbox } from 'antd';
 
@@ -46,9 +46,10 @@ const ColorList = props => {
 };
 
 const App = () => {
-  const [color, setColor] = React.useState(primaryColor);
+  const [color, setColor] = useState(primaryColor);
+  const [collapsed, toggle] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     AntdColorReplacerClient.compile({
       primaryColor: color,
     });
@@ -104,7 +105,39 @@ const App = () => {
             <Menu.Item key='4'>Option 4</Menu.Item>
           </SubMenu>
         </Menu>
-        <DatePicker.RangePicker />
+
+        <Menu style={{ width: 256 }} defaultOpenKeys={['sub1']} mode='inline'>
+          <SubMenu
+            key='sub1'
+            title={
+              <span>
+                <Icon type='mail' />
+                <span>Navigation One</span>
+              </span>
+            }
+          >
+            <SubMenu
+              key='sub1212'
+              title={
+                <span>
+                  <Icon type='mail' />
+                  <span>Navigation One</span>
+                </span>
+              }
+            >
+              <Menu.Item key='11'>Option 1</Menu.Item>
+              <Menu.Item key='22'>Option 2</Menu.Item>
+              <Menu.Item key='23'>Option 3</Menu.Item>
+              <Menu.Item key='24'>Option 4</Menu.Item>
+            </SubMenu>
+            <Menu.Item key='2'>Option 2</Menu.Item>
+            <Menu.Item key='3'>Option 3</Menu.Item>
+            <Menu.Item key='4'>Option 4</Menu.Item>
+          </SubMenu>
+        </Menu>
+
+        <DatePicker disabledDate={n => n.valueOf() > Date.now()} />
+        <DatePicker.RangePicker disabledDate={n => n.valueOf() > Date.now()} />
         <Steps direction='vertical' current={1}>
           <Step title='Finished' description='This is a description.' />
           <Step title='In Progress' description='This is a description.' />
@@ -115,8 +148,61 @@ const App = () => {
           <Checkbox value={2}>2</Checkbox>
           <Checkbox value={3}>3</Checkbox>
         </Group>
+        <Menu
+          defaultSelectedKeys={['11']}
+          defaultOpenKeys={['sub3']}
+          mode='inline'
+          theme='dark'
+          inlineCollapsed={collapsed}
+        >
+          <Menu.Item key='1'>
+            <Icon type='pie-chart' />
+            <span>Option 1</span>
+          </Menu.Item>
+          <Menu.Item key='2'>
+            <Icon type='desktop' />
+            <span>Option 2</span>
+          </Menu.Item>
+          <Menu.Item key='3'>
+            <Icon type='inbox' />
+            <span>Option 3</span>
+          </Menu.Item>
+          <SubMenu
+            key='sub1'
+            title={
+              <span>
+                <Icon type='mail' />
+                <span>Navigation One</span>
+              </span>
+            }
+          >
+            <Menu.Item key='5'>Option 5</Menu.Item>
+            <Menu.Item key='6'>Option 6</Menu.Item>
+            <Menu.Item key='7'>Option 7</Menu.Item>
+            <Menu.Item key='8'>Option 8</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key='sub2'
+            title={
+              <span>
+                <Icon type='appstore' />
+                <span>Navigation Two</span>
+              </span>
+            }
+          >
+            <Menu.Item key='9'>Option 9</Menu.Item>
+            <Menu.Item key='10'>Option 10</Menu.Item>
+            <SubMenu key='sub3' title='Submenu'>
+              <Menu.Item key='11'>Option 11</Menu.Item>
+              <Menu.Item key='12'>Option 12</Menu.Item>
+            </SubMenu>
+          </SubMenu>
+        </Menu>
         <button type='button' className='dark'>
           Toggle Btn
+        </button>
+        <button type='button' onClick={() => toggle(p => !p)}>
+          collapsed
         </button>
       </div>
     </div>
