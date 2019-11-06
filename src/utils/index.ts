@@ -29,9 +29,7 @@ export const extractColorFromValue = (cssValue: string): null | string => {
  */
 export const checkColorLuminance = (cssValue: string, range: [number, number]): boolean => {
   const value = cssValue.replace(/\s*!important/, '');
-
   const color = extractColorFromValue(value);
-
   const noneList = ['0', 'none', 'unset'];
 
   try {
