@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Steps, Menu, Icon, DatePicker, Checkbox } from 'antd';
+import { Button, Steps, Menu, Icon, DatePicker, Checkbox, Row, Col, Input } from 'antd';
 
 import './styles/index.less';
 import AntdColorReplacerClient from '../lib/client';
@@ -73,6 +73,12 @@ const App = () => {
           preview, this is our first end-user product built completely with these new
         </p>
       </div>
+      <Row>
+        <Col span={4}>label</Col>
+        <Col span={20}>
+          <Input style={{ width: '100%' }} />
+        </Col>
+      </Row>
       <div style={{ padding: 40, backgroundColor: '#fff' }}>
         <Button type='primary'>Primary</Button>
         <Button type='dashed'>dashed</Button>
