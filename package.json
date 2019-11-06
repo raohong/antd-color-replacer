@@ -1,6 +1,6 @@
 {
   "name": "antd-color-replacer",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "antd  主题切换",
   "main": "lib/index.js",
   "scripts": {
