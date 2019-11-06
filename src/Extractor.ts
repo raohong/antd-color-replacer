@@ -94,9 +94,20 @@ const handleRule = (
     subNode.remove();
   });
 
+  /**
+   * 如果该 node  没有包含主色, 则不允许 loose prop
+   */
+  const isEmpty = node.every(subNode => {
+    if (subNode.type !== 'decl') {
+      return false;
+    }
+
+    return !ruleChecker(subNode.value);
+  });
+
   node.walkDecls(subNode => {
     const { prop, value } = subNode;
-    if (!ruleChecker(value)) {
+    if (!ruleChecker(value) && !isEmpty) {
       if (!loosePropCheck(prop, looseProps!) || !checkColorLuminance(value, luminance!)) {
         subNode.remove();
       }
@@ -113,7 +124,6 @@ export default class Extactor {
     this.options = options;
 
     const { primaryColor } = options;
-
     const colors = options.colors!.slice();
 
     // 将主色排在最前面检查
@@ -124,11 +134,9 @@ export default class Extactor {
     const colorRegs = colors!.map(color => new RegExp(regEscape(color), 'i'));
 
     this.colorRegs = colorRegs;
-
     this.ruleChecker = (val: string) => {
       return check(val, this.colorRegs);
     };
-
     this.exec = this.exec.bind(this);
   }
 
@@ -162,7 +170,6 @@ export default class Extactor {
     try {
       const { selectorAdapter } = this.options;
       const ruleChecker = this.ruleChecker;
-
       const root = postcss.parse(assets);
 
       const walker: IWalker = parentNode => {
