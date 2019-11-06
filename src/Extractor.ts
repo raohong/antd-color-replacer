@@ -97,17 +97,18 @@ const handleRule = (
   /**
    * 如果该 node  没有包含主色, 则不允许 loose prop
    */
-  const isEmpty = node.every(subNode => {
+  const hasThemeColor = node.some(subNode => {
     if (subNode.type !== 'decl') {
       return false;
     }
 
-    return !ruleChecker(subNode.value);
+    return ruleChecker(subNode.value);
   });
 
   node.walkDecls(subNode => {
     const { prop, value } = subNode;
-    if (!ruleChecker(value) && !isEmpty) {
+
+    if (!ruleChecker(value) && hasThemeColor) {
       if (!loosePropCheck(prop, looseProps!) || !checkColorLuminance(value, luminance!)) {
         subNode.remove();
       }
