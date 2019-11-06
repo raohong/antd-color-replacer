@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Steps, Menu, Icon, DatePicker, Checkbox, Row, Col, Input } from 'antd';
+import { Button, Steps, Menu, Icon, DatePicker, Checkbox, Row, Col, Input, Form } from 'antd';
 
 import './styles/index.less';
 import AntdColorReplacerClient from '../lib/client';
@@ -79,6 +79,11 @@ const App = () => {
           <Input style={{ width: '100%' }} />
         </Col>
       </Row>
+      <Form>
+        <Form.Item labelCol={4} wrapperCol={20}>
+          <Input style={{ width: '100%' }} />
+        </Form.Item>
+      </Form>
       <div style={{ padding: 40, backgroundColor: '#fff' }}>
         <Button type='primary'>Primary</Button>
         <Button type='dashed'>dashed</Button>
