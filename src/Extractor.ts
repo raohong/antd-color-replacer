@@ -108,8 +108,11 @@ const handleRule = (
   node.walkDecls(subNode => {
     const { prop, value } = subNode;
 
-    if (!ruleChecker(value) && hasThemeColor) {
-      if (!loosePropCheck(prop, looseProps!) || !checkColorLuminance(value, luminance!)) {
+    if (!ruleChecker(value)) {
+      if (
+        !loosePropCheck(prop, looseProps!) ||
+        (!checkColorLuminance(value, luminance!) || !hasThemeColor)
+      ) {
         subNode.remove();
       }
     }
