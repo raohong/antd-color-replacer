@@ -57,7 +57,7 @@ describe('Extractor test not in loose mode', () => {
     expect(hasExpectedRule).toEqual(true);
 
     // #fff passed
-    expect(containRule).toEqual(true);
+    expect(containRule).toEqual(false);
   });
 });
 
