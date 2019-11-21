@@ -53,4 +53,8 @@ export const antdSelectorAdapter: AntdColorReplacerAdapter = selector => {
       .map(item => `:not(.ant-calendar-disabled-cell)${item}`)
       .join(',');
   }
+
+  if (selector === '.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon') {
+    return `:not(.ant-steps-item-active)${selector}`;
+  }
 };
